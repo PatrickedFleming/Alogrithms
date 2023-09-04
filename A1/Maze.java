@@ -3,60 +3,92 @@
 //Student Number: c3253586
 //Date: 01/09/2023
 
+import java.io.File;
+import java.io.FileWriter;
+
 public class Maze {
 
-    //start and finish cells
-    private MazeCell startCell;
-    private MazeCell finishCell;
+    //row and coloum size of maze
+    private int row;
+    private int coloum;
+    //start and finish nodes
+    private MazeNode startNode;
+    private MazeNode finishNode;
 
-    //cell conectivity list
-    private MazeCell[] cellList;
+    //node conectivity list
+    private MazeNode[] nodeList;
 
-    //2d array of maze cells
-    private MazeCell[][] maze;
-
-
-    //constructor
-
-    public Maze(int row, int coloum){
-        maze = new MazeCell[row][coloum];
-        cellList = new MazeCell[row*coloum];
-    }
-
-
-    //getters and setters
-    public MazeCell getStartCell() {
-        return startCell;
-    }
-
-    public void setStartCell(MazeCell startCell) {
-        this.startCell = startCell;
-    }
-
-    public MazeCell getFinishCell() {
-        return finishCell;
-    }
-
-    public void setFinishCell(MazeCell finishCell) {
-        this.finishCell = finishCell;
-    }
-
-    public MazeCell[] getCellList() {
-        return cellList;
-    }
-
-    public void setCellList(MazeCell[] cellList) {
-        this.cellList = cellList;
-    }
-
-    public MazeCell[][] getMaze() {
-        return maze;
-    }
-
-    public void setMaze(MazeCell[][] maze) {
-        this.maze = maze;
-    }
+    //2d array of maze nodes
+    private MazeNode[][] maze;
 
     
 
+    //constructor
+    public Maze(int row, int coloum){
+        this.maze = new MazeNode[row][coloum];
+        this.nodeList = new MazeNode[row*coloum];
+        this.row = row;
+        this.coloum = coloum;
+        //fill maze with nodes
+        fillMaze();
+    }
+
+    public MazeNode[] getCellList() {
+        return nodeList;
+    }
+
+    //method to fill maze with nodes
+    private void fillMaze(){
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < coloum; j++){
+                maze[i][j] = new MazeNode(i,j);
+            }
+        }
+    }
+
+    public void setStartNode(MazeNode node){
+        this.startNode = node;
+    }
+
+    public void setFinishNode(MazeNode node){
+        this.finishNode = node;
+    }
+
+    public MazeNode getStartNode(){
+        return startNode;
+    }
+
+    public MazeNode getFinishNode(){
+        return finishNode;
+    }
+
+    public MazeNode getNode(int x, int y){
+        return maze[x][y];
+    }
+
+
+
+    @Override
+    public String toString(){
+        String mazeString = "";
+        mazeString += row + ":" + coloum + ":"+ startNode + ":" + finishNode + ":";
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < coloum; j++){
+                mazeString += maze[i][j].getNodeValue();
+            }
+        }
+        return mazeString;
+    }
+
+    public void writeToFile(File file){
+        try{
+            FileWriter writer = new FileWriter(file);
+            writer.write(toString());
+            writer.close();
+        }
+        catch(Exception e){
+            System.out.println("Error writing to file");
+        }
+    }
+    
 }
