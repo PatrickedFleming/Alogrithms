@@ -9,8 +9,8 @@
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}",
-            "cwd": "${workspaceFolder}",
-            "args": "2 3 test.dat"
+            "cwd": "${workspaceFolder}/A1",
+            "args": "Test.dat out.dat"
         },
         {
             "type": "java",

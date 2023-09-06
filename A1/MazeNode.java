@@ -9,8 +9,6 @@ public class MazeNode {
     private int nodeNumber;
     private int nodeValue;
 
-    private static int nodeCount = 1;
-
     private MazeNode northNode = null;
     private MazeNode southNode = null;
     private MazeNode eastNode = null;
@@ -18,13 +16,14 @@ public class MazeNode {
 
     private boolean visited = false;
 
+    private MazeNode Parent = null;
+
+
 
     //constructor
     public MazeNode(int x, int y){
         nodeX = x;
         nodeY = y;
-        nodeNumber = nodeCount;
-        nodeCount++;
     }
     //gets
     public int getNodeNumber() {
@@ -59,6 +58,10 @@ public class MazeNode {
         return westNode;
     }
 
+    public MazeNode getParent(){
+        return Parent;
+    }
+
     public void setNodeValue(){
         if(southNode == null && eastNode == null){
             nodeValue = 0;
@@ -72,6 +75,19 @@ public class MazeNode {
         else{
             nodeValue = 3;
         }
+    }
+
+    public void setParent(MazeNode value){
+        Parent = value;
+    }
+
+    public void setNodeNumber(int value){
+        nodeNumber = value;
+    }
+
+
+    public void setNodeValue(int value){
+        nodeValue = value;
     }
 
     public void setVisited(boolean value){
@@ -118,6 +134,15 @@ public class MazeNode {
                 return null;
             }
         }
+    }
+
+    public MazeNode[] getNeighbours(){
+        MazeNode[] neighbours = new MazeNode[4];
+        neighbours[0] = northNode;
+        neighbours[1] = southNode;
+        neighbours[2] = eastNode;
+        neighbours[3] = westNode;
+        return neighbours;
     }
 
     @Override
