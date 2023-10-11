@@ -4,10 +4,11 @@
 
 import java.io.File;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class A2 {
     
-    private static int[][] adjacencyGraph;
+    private static ArrayList<Adjacencey> adjacencyGraph = new ArrayList<Adjacencey>();
     private static int[][] graphPoints;
 
     public static void main(String[] args) {
@@ -19,7 +20,8 @@ public class A2 {
         generateAdjacencyGraph();
 
         //run the algorithms
-        //DynaTSP dyna = new DynaTSP(adjacencyGraph);
+        DynaTSP dyna = new DynaTSP(adjacencyGraph);
+        dyna.run();
         //ClimbTSP climb = new ClimbTSP(adjacencyGraph, N, P);
 
     }
@@ -31,7 +33,6 @@ public class A2 {
         try{
             Scanner sc = new Scanner(file);
             int size = sc.nextInt();
-            adjacencyGraph = new int[size][size];
             graphPoints = new int[size][2];
             for(int i = 0; i < size; i++){
                 graphPoints[i][0] = sc.nextInt();
@@ -49,11 +50,10 @@ public class A2 {
     private static void generateAdjacencyGraph(){
         for(int i = 0; i < graphPoints.length; i++){
             for(int j = 0; j < graphPoints.length; j++){
-                if(i == j){
-                    adjacencyGraph[i][j] = 0;
-                }
-                else{
-                    adjacencyGraph[i][j] = (int) Math.sqrt(Math.pow(graphPoints[i][0] - graphPoints[j][0], 2) + Math.pow(graphPoints[i][1] - graphPoints[j][1], 2));
+                int tempWeight = (int)Math.sqrt(Math.pow((graphPoints[i][0] - graphPoints[j][0]), 2) + Math.pow((graphPoints[i][1] - graphPoints[j][1]), 2));
+                Adjacencey temp = new Adjacencey(j, i, tempWeight);
+                if(!adjacencyGraph.contains(temp)){
+                    adjacencyGraph.add(temp);
                 }
             }
         }
