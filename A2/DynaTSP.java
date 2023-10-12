@@ -7,78 +7,59 @@ import java.util.HashMap;
 
 
 public class DynaTSP {
-    private int[][] adjacencyGraph;
+    private HashMap<Integer, Adjacencey> adjacencyGraph;
     private int[] points;
 
-    private int count = 0;
-    private HashMap<Integer, Path> paths = new HashMap<Integer, Path>();
-    private HashMap<Integer, Integer> pathWeights = new HashMap<Integer, Integer>();
-
     private Path bestPath;
+    private int bestWeight = Integer.MAX_VALUE;
 
    
 
 
 
 
-    public DynaTSP(int[][] graph){
+    public DynaTSP(HashMap<Integer, Adjacencey> graph, int[] points){
         this.adjacencyGraph = graph;
-        points = new int[graph.length];
-        for(int i = 0; i < graph.length; i++){
-            points[i] = i;
-        }
+        this.points = points;
     }
 
     public void run(){
-        findPathWeight(points, points.length, count);
-
-        setShortestPath();
+        findPathWeight(points, points.length);
         printBestPath();
     }
 
-    private void findPathWeight(int[] path, int size, int n){
+    private void findPathWeight(int[] path, int size){
         if(size == 1){
-            Path temp = new Path(path);
-            temp.setWeight(calculateWeight(path));
-            paths.put(count, temp);
-            pathWeights.put(count, temp.getWeight());
-            count++;
+            calculateWeight(path);
         }
         else{
             for(int i = 1; i < size; i++){
-                findPathWeight(path, size - 1, n);
-                if(size % 2 == 1){
-                    int temp = path[1];
-                    path[1] = path[size - 1];
-                    path[size - 1] = temp;
-                }
-                else{
+                findPathWeight(path, size - 1);
+                if(size % 2 == 0){
                     int temp = path[i];
                     path[i] = path[size - 1];
                     path[size - 1] = temp;
                 }
+                else{
+                    int temp = path[1];
+                    path[1] = path[size - 1];
+                    path[size - 1] = temp;
+                }
             }
         }
     }
 
    
 
-    private int calculateWeight(int[] path){
+    private void calculateWeight(int[] path){
         int weight = 0;
         for(int i = 0; i < path.length - 1; i++){
-            weight += adjacencyGraph[path[i]][path[i + 1]];
+            weight += adjacencyGraph.get(HashFunction.pairWiseHash(path[i], path[i + 1])).getWeight();
         }
-        weight += adjacencyGraph[path[path.length - 1]][path[0]];
-        return weight;
-    }
-
-    private void setShortestPath(){
-        int shortest = Integer.MAX_VALUE;
-        for(int i = 0; i < pathWeights.size(); i++){
-            if(pathWeights.get(i) < shortest){
-                shortest = pathWeights.get(i);
-                bestPath = paths.get(i);
-            }
+        weight += adjacencyGraph.get(HashFunction.pairWiseHash(path[path.length - 1], path[0])).getWeight();
+        if(weight < bestWeight){
+            bestPath = new Path(path);
+            bestPath.setWeight(weight);
         }
     }
 

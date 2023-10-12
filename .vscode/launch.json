@@ -6,25 +6,18 @@
     "configurations": [
         {
             "type": "java",
-            "name": "MazeSolver",
-            "request": "launch",
-            "mainClass": "MazeSolver",
-            "projectName": "Alogrithms_9c19ec8d"
-        },
-        {
-            "type": "java",
             "name": "Current File",
             "request": "launch",
-            "mainClass": "${file}",
-            "cwd": "${workspaceFolder}/A1",
-            "args": "maze_3_20_20.txt maze_3_20_20_Solution.txt"
+            "mainClass": "${file}"
         },
         {
             "type": "java",
-            "name": "MazeGenerator",
+            "name": "A2",
             "request": "launch",
-            "mainClass": "MazeGenerator",
-            "projectName": "Alogrithms_9fce43f7"
+            "mainClass": "A2",
+            "projectName": "Alogrithms_9c19ec8d",
+            "cwd": "${workspaceFolder}/A2/",
+            "args": "tsp22.txt 10 10"
         }
     ]
 }

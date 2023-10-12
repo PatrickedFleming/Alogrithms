@@ -1,5 +1,7 @@
 {
     "java.project.sourcePaths": [
         "A2"
-    ]
+    ],
+    "diffEditor.maxFileSize": 0,
+    "workbench.localHistory.maxFileSize": 500
 }

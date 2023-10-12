@@ -4,12 +4,13 @@
 
 import java.io.File;
 import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class A2 {
     
-    private static ArrayList<Adjacencey> adjacencyGraph = new ArrayList<Adjacencey>();
+    private static HashMap<Integer, Adjacencey> adjacencyGraph = new HashMap<Integer, Adjacencey>();
     private static int[][] graphPoints;
+    private static int[] points;
 
     public static void main(String[] args) {
         File graph = new File(args[0]);
@@ -20,7 +21,7 @@ public class A2 {
         generateAdjacencyGraph();
 
         //run the algorithms
-        DynaTSP dyna = new DynaTSP(adjacencyGraph);
+        DynaTSP dyna = new DynaTSP(adjacencyGraph, points);
         dyna.run();
         //ClimbTSP climb = new ClimbTSP(adjacencyGraph, N, P);
 
@@ -43,6 +44,10 @@ public class A2 {
         catch(Exception e){
             System.out.println("Error: " + e);
         }
+        points = new int[graphPoints.length];
+        for(int i = 0; i < graphPoints.length; i++){
+            points[i] = i;
+        }
     }
 
 
@@ -52,9 +57,7 @@ public class A2 {
             for(int j = 0; j < graphPoints.length; j++){
                 int tempWeight = (int)Math.sqrt(Math.pow((graphPoints[i][0] - graphPoints[j][0]), 2) + Math.pow((graphPoints[i][1] - graphPoints[j][1]), 2));
                 Adjacencey temp = new Adjacencey(j, i, tempWeight);
-                if(!adjacencyGraph.contains(temp)){
-                    adjacencyGraph.add(temp);
-                }
+                adjacencyGraph.put(HashFunction.pairWiseHash(i, j), temp);
             }
         }
     }
