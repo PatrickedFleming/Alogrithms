@@ -15,9 +15,9 @@
             "name": "A2",
             "request": "launch",
             "mainClass": "A2",
-            "projectName": "Alogrithms_9c19ec8d",
+            "projectName": "Alogrithms_9fce43f7",
             "cwd": "${workspaceFolder}/A2/",
-            "args": "tsp22.txt 10 10"
+            "args": "tsp4.txt 10 10"
         }
     ]
 }
