@@ -1,0 +1,5 @@
+to run the program you need to compile with javac A2.java then call the program with java A2 tspX.txt N P
+the program will run both hill climb and dyna then output results.
+
+
+Note: tsp26 and greater  cause dyna to heap space out of memory. Couldnt figure out how to increase the heap size in my ide so havent tested on higher ram so unsure what to set to to achieve.
